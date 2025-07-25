@@ -2,13 +2,12 @@ class fileReader():
     def __init__(self, fileName):
         self.fileName = fileName
         f = open(fileName+".txt")
-        mazeWidthStr = f.readline().strip()
-        mazeHeightStr = f.readline().strip()
+        mazeWidth = int(f.readline().strip())
+        mazeHeight = int(f.readline().strip())
 
-        mazeWidth = int(mazeWidthStr)
-        mazeHeight = int(mazeHeightStr)
-        
-        print("Maze Width =",mazeWidth,"Maze Height =",mazeHeight)
+        print(mazeWidth,mazeHeight)
+        for lines in f:
+             print(lines[1])
         
         f.close()
 

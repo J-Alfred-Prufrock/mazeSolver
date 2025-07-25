@@ -21,7 +21,7 @@ symbolMap = {
 }
 
 def printMaze():
-    choice = int(input("How would you like the maze to be displayed?\n1: Printed in terminal as walls, paths, start and exit\n2: Printed in terminal as [x,y] coordinates\n3: In a pop-up box as walls, paths, start and exit\n4: In a pop-up box as [x,y] coordinates\n5: Open maze editor\n"))
+    choice = int(input("How would you like the maze to be displayed?\n1: Printed in terminal as walls, paths, start and exit\n2: Printed in terminal as [x,y] coordinates\n3: In a pop-up box as walls, paths, start and exit\n4: In a pop-up box as [x,y] coordinates\n5: Open maze editor\n6: Read from file (currently hardcoded to premadeMaze1)\n"))
     if choice == 1:
         printMazeLayout()
     elif choice == 2:
