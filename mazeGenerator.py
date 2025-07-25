@@ -32,6 +32,8 @@ def printMaze():
         showMazePopupCoords()
     elif choice== 5:
         openMazeEditor()
+    elif choice == 6:
+        pass
 
 def loadMadeFromFile(fileName):
     fileName = "premadeMaze1" # stub
@@ -200,6 +202,6 @@ for y in range(mazeSizeY):
 
 
 
-#printMaze()
+printMaze()
 loadMadeFromFile("premadeMaze1")
 
