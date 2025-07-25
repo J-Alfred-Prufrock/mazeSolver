@@ -13,10 +13,16 @@ class fileReader():
         yCounter = 0
 
         print(mazeWidth,mazeHeight)
-        for lines in f:
-             for i in lines:
+        for rawLines in f:
+             lines = rawLines.strip()
+             for i in range(len(lines)):
                  n = node(xCounter,yCounter,lines[i],mazeWidth,mazeHeight)
-                 tempTestArray.insert(node)
+                 tempTestArray.append(n)
+                 print(n.xPosition,n.yPosition,n.property)
+                 xCounter = xCounter+1
+             yCounter = yCounter+1
+             xCounter = 0
+             print("\n")
         
         f.close()
 
