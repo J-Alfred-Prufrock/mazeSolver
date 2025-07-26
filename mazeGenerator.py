@@ -20,7 +20,47 @@ symbolMap = {
     end: "E"
 }
 
+def main():
+    print("Hello welcome to maze solver printer thing idk")
+    choice = int(input("Would you like to create your own maze or select a pre made maze?\n1: Create own Maze\n2: Select premade maze\n"))
+    if choice == 1:
+        printMaze()
+    if choice == 2:
+        loadMadeFromFile("premadeMaze1")
+
 def printMaze():
+    done = False
+    while(done == False):
+        try:
+            mazeSizeX = int(input("what would you like the width of the maze to be?\n"))
+            done = True
+        except:
+            print("please enter an integer")
+            done = False
+
+    done = False
+    while done == False:
+        try:
+            mazeSizeY = int(input("what would you like the height of the maze to be?\n"))
+            done = True
+        except:
+            print("please enter an integer")
+            done = False
+
+    print(f"Making {mazeSizeX}x{mazeSizeY} maze")
+
+    for y in range(mazeSizeY):
+        row = []
+        for x in range(mazeSizeX):
+            if x == 0 and y == 0:
+                n = node(x, y, start, mazeSizeX, mazeSizeY)
+            elif x== mazeSizeX-1 and y == mazeSizeY-1:
+                n = node(x, y, end, mazeSizeX, mazeSizeY)
+            else:
+                n = node(x, y, path, mazeSizeX, mazeSizeY)
+            row.append(n)
+        rows.append(row)
+        
     choice = int(input("How would you like the maze to be displayed?\n1: Printed in terminal as walls, paths, start and exit\n2: Printed in terminal as [x,y] coordinates\n3: In a pop-up box as walls, paths, start and exit\n4: In a pop-up box as [x,y] coordinates\n5: Open maze editor\n6: Read from file (currently hardcoded to premadeMaze1)\n"))
     if choice == 1:
         printMazeLayout()
@@ -168,40 +208,10 @@ def printMazeCoords():
     print("Where S = start, . = path, # = wall, E = end")  
 
 
-done = False
-while(done == False):
-    try:
-        mazeSizeX = int(input("what would you like the width of the maze to be?\n"))
-        done = True
-    except:
-        print("please enter an integer")
-        done = False
-
-done = False
-while done == False:
-    try:
-        mazeSizeY = int(input("what would you like the height of the maze to be?\n"))
-        done = True
-    except:
-        print("please enter an integer")
-        done = False
-
-print(f"Making {mazeSizeX}x{mazeSizeY} maze")
-
-for y in range(mazeSizeY):
-    row = []
-    for x in range(mazeSizeX):
-        if x == 0 and y == 0:
-            n = node(x, y, start, mazeSizeX, mazeSizeY)
-        elif x== mazeSizeX-1 and y == mazeSizeY-1:
-            n = node(x, y, end, mazeSizeX, mazeSizeY)
-        else:
-            n = node(x, y, path, mazeSizeX, mazeSizeY)
-        row.append(n)
-    rows.append(row)
 
 
 
-printMaze()
-loadMadeFromFile("premadeMaze1")
+main()
+
+
 
