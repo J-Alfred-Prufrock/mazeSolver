@@ -60,18 +60,18 @@ def printMaze():
                 n = node(x, y, path, mazeSizeX, mazeSizeY)
             row.append(n)
         rows.append(row)
-        
+
     choice = int(input("How would you like the maze to be displayed?\n1: Printed in terminal as walls, paths, start and exit\n2: Printed in terminal as [x,y] coordinates\n3: In a pop-up box as walls, paths, start and exit\n4: In a pop-up box as [x,y] coordinates\n5: Open maze editor\n6: Read from file (currently hardcoded to premadeMaze1)\n"))
     if choice == 1:
-        printMazeLayout()
+        printMazeLayout(mazeSizeX,mazeSizeY)
     elif choice == 2:
-        printMazeCoords()
+        printMazeCoords(mazeSizeX,mazeSizeY)
     elif choice == 3:
-        showMazePopupProperties()
+        showMazePopupProperties(mazeSizeX,mazeSizeY)
     elif choice == 4:
-        showMazePopupCoords()
+        showMazePopupCoords(mazeSizeX,mazeSizeY)
     elif choice== 5:
-        openMazeEditor()
+        openMazeEditor(mazeSizeX,mazeSizeY)
     elif choice == 6:
         pass
 
@@ -79,7 +79,7 @@ def loadMadeFromFile(fileName):
     fileName = "premadeMaze1" # stub
     m = fileReader(fileName)
 
-def showMazePopupCoords():
+def showMazePopupCoords(mazeSizeX,mazeSizeY):
     mazePopup = tk.Tk()
     mazePopup.title("Maze Layout")
     
@@ -98,7 +98,7 @@ def showMazePopupCoords():
     text.insert(tk.END, "Where;\nS = start\n. = path\n# = wall\nE = end")
     mazePopup.mainloop()
 
-def openMazeEditor():
+def openMazeEditor(mazeSizeX,mazeSizeY):
     def renderMaze():
         text.config(state="normal")  # Temporarily make it editable so we can update
         text.delete("1.0", tk.END)
@@ -111,7 +111,7 @@ def openMazeEditor():
         text.config(state="disabled")  # Lock the text area to prevent user edits
 
 
-    def getCoordinates():
+    def getCoordinates(mazeSizeX,mazeSizeY):
         try:
             coords = coord_entry.get().split(",")
             x, y = int(coords[0]), int(coords[1])
@@ -170,7 +170,7 @@ def openMazeEditor():
     mazePopup.mainloop()
 
 
-def showMazePopupProperties():
+def showMazePopupProperties(mazeSizeX,mazeSizeY):
     mazePopup = tk.Tk()
     mazePopup.title("Maze Layout")
     
@@ -189,7 +189,7 @@ def showMazePopupProperties():
     text.insert(tk.END, "Where;\nS = start\n. = path\n# = wall\nE = end")
     mazePopup.mainloop()
 
-def printMazeLayout():
+def printMazeLayout(mazeSizeX,mazeSizeY):
     print("\nMaze Layout")
     for y in range(mazeSizeY):
         for x in range(mazeSizeX):
@@ -198,7 +198,7 @@ def printMazeLayout():
         print()  
     print("Where S = start, . = path, # = wall, E = end")  
 
-def printMazeCoords():
+def printMazeCoords(mazeSizeX,mazeSizeY):
     print("\nMaze Layout")
     for y in range(mazeSizeY):
         for x in range(mazeSizeX):

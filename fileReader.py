@@ -1,8 +1,30 @@
 from node import node
+from mazeObj import mazeObj
+
+path = int(0)
+wall = int(1)
+start = int(2)
+end = int(3)
+
+propertyMap = {
+    ".": path,
+    "#": wall,
+    "S": start,
+    "E": end
+}
+
 
 class fileReader():
-    def __init__(self, fileName):
-        self.fileName = fileName
+    def __init__(self):
+        pass
+
+    #precondition a maze exists in correct format in file
+    #postcondition a maze object is created and passed back out 
+    def loadMaze(self, fileName):
+
+        mazeGridChars = []
+
+        
         f = open(fileName+".txt")
 
         mazeWidth = int(f.readline().strip())
