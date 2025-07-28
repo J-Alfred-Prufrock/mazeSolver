@@ -24,28 +24,34 @@ class fileReader():
 
         mazeGridChars = []
 
-        
-        f = open(fileName+".txt")
 
-        mazeWidth = int(f.readline().strip())
-        mazeHeight = int(f.readline().strip())
+        with open(fileName+'.txt') as f:
+            mazeWidth = int(f.readline().strip())
+            mazeHeight = int(f.readline().strip())
 
-        tempTestArray = []
-        xCounter = 0
-        yCounter = 0
+            currentMaze = mazeObj(mazeWidth,mazeHeight)
 
-        print(mazeWidth,mazeHeight)
-        for rawLines in f:
-             lines = rawLines.strip()
-             for i in range(len(lines)):
-                 n = node(xCounter,yCounter,lines[i],mazeWidth,mazeHeight)
-                 tempTestArray.append(n)
-                 print(n.xPosition,n.yPosition,n.property)
-                 xCounter = xCounter+1
-             yCounter = yCounter+1
-             xCounter = 0
-             print("\n")
-        
-        f.close()
+            mazeArray = []
+            currentRow = []
+            xCounter = 0
+            yCounter = 0
+
+            print(mazeWidth,mazeHeight)
+            for rawLines in f:
+                lines = rawLines.strip()
+                for i in range(len(lines)):
+                    property = propertyMap[lines[i]]
+                    n = node(xCounter,yCounter,property,mazeWidth,mazeHeight)
+                    currentRow.append(n)
+                    print(n.xPosition,n.yPosition,n.property)
+                    xCounter = xCounter+1
+                yCounter = yCounter+1
+                xCounter = 0
+                mazeArray.append(currentRow)
+                currentRow = []
+                print("\n")
+
+        currentMaze.addFromFile(mazeArray)
+        return currentMaze
 
 

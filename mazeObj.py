@@ -24,3 +24,7 @@ class mazeObj():
                     n = node(x, y, self.path, self.mazeSizeX, self.mazeSizeY)
                 currentRowNodes.append(n)
             self.rows.append(currentRowNodes)
+    
+    def addFromFile(self, mazeArray):
+        self.rows = mazeArray
+        pass
