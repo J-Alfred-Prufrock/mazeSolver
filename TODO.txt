@@ -1,0 +1,7 @@
+To do list
+1. install claude code
+1a . Make it an exe file so i can send to craig
+2. make it so user can input name for file
+3. make border around maze?
+4. make so that user can choose start finish
+5. multiple windows open at once?
