@@ -28,3 +28,13 @@ class mazeObj():
     def addFromFile(self, mazeArray):
         self.rows = mazeArray
         pass
+
+    def printMazeTerminalCoords(self):
+        print("\nMaze Layout\n")
+        for y in range(self.mazeSizeY):
+            for x in range(self.mazeSizeX):
+
+                currentNode = self.rows[y][x]
+                print(f"[{currentNode.xPosition},{currentNode.yPosition}]",end=" ")
+            print()
+        print("Where S = start, . = path, # = wall, E = end")  

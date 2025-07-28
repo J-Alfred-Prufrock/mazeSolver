@@ -2,6 +2,7 @@ from node import node
 import tkinter as tk
 from tkinter import scrolledtext
 from fileReader import fileReader
+from mazeObj import mazeObj 
 
 
 outOfBounds = int(-1)
@@ -11,7 +12,8 @@ start = int(2)
 end = int(3)
 
 rows= []
-collums = []
+
+mazeFromFile = mazeObj(0,0)
 
 symbolMap = {
     path: ".",
@@ -26,7 +28,23 @@ def main():
     if choice == 1:
         printMaze()
     if choice == 2:
-        loadMadeFromFile("premadeMaze1")
+        loadMadeFromFile()
+
+def loadMadeFromFile():
+    mazeName = str(input("What is the name of the text file your maze is located in?\n"))
+    if mazeName == "a":
+        mazeName = "premadeMaze1"
+
+    fileReaderClass = fileReader()
+
+    mazeFromFile = fileReaderClass.loadMaze(mazeName)
+
+    #mazeFromFile.addFromFile(fileReaderClass.loadMaze(mazeName))
+
+
+    mazeFromFile.printMazeTerminalCoords()
+
+
 
 def printMaze():
     done = False
@@ -48,6 +66,16 @@ def printMaze():
             done = False
 
     print(f"Making {mazeSizeX}x{mazeSizeY} maze")
+
+
+
+
+
+
+
+
+
+
 
     for y in range(mazeSizeY):
         row = []
@@ -75,9 +103,8 @@ def printMaze():
     elif choice == 6:
         pass
 
-def loadMadeFromFile(fileName):
-    fileName = "premadeMaze1" # stub
-    m = fileReader(fileName)
+
+    
 
 def showMazePopupCoords(mazeSizeX,mazeSizeY):
     mazePopup = tk.Tk()

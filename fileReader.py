@@ -43,7 +43,7 @@ class fileReader():
                     property = propertyMap[lines[i]]
                     n = node(xCounter,yCounter,property,mazeWidth,mazeHeight)
                     currentRow.append(n)
-                    print(n.xPosition,n.yPosition,n.property)
+                    #print(n.xPosition,n.yPosition,n.property)
                     xCounter = xCounter+1
                 yCounter = yCounter+1
                 xCounter = 0
