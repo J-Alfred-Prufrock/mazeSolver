@@ -1,6 +1,8 @@
 from node import node
 import tkinter as tk
 from tkinter import scrolledtext
+from tkinter import messagebox
+import os 
 
 class mazeObj():
     def __init__(self, mazeSizeX, mazeSizeY):
@@ -38,21 +40,36 @@ class mazeObj():
         pass
 
     def saveMazeToFile(self):
-        #obtain file name for now its poop
-        fileName = "poop"
+        fileName = self.createPopUp()
 
-        with open(f"{fileName}.txt", "x") as f:
-            f.write(f"{self.mazeSizeX}\n")
-            f.write(f"{self.mazeSizeY}\n")
 
-            for y in range(self.mazeSizeY):
-                rowChars = ""
-                for x in range(self.mazeSizeX):
-                    n = self.rows[y][x]
-                    rowChars +=self.symbolMap.get(n.property, '?')#adding symbol to the string we write
-                f.write(f"{rowChars}\n")
+        if fileName:
+            filePath = f"{fileName}.txt"
+            
+            if os.path.exists(filePath):
+                result = messagebox.askyesno("File Exists", f"File '{filePath}' already exists. Overwrite?")
 
-            print(f"Maze saved successfully to {fileName}.txt")
+                if not result:
+                    print("Save cancelled - file already exists")
+                    return
+
+            try:
+                with open(f"{fileName}.txt", "w") as f:
+                    f.write(f"{self.mazeSizeX}\n")
+                    f.write(f"{self.mazeSizeY}\n")
+
+                    for y in range(self.mazeSizeY):
+                        rowChars = ""
+                        for x in range(self.mazeSizeX):
+                            n = self.rows[y][x]
+                            rowChars +=self.symbolMap.get(n.property, '?')#adding symbol to the string we write
+                        f.write(f"{rowChars}\n")
+
+                    print(f"Maze saved successfully to {fileName}.txt")
+            except Exception as e:
+                print(f"Error saving file: {e}")
+        else:
+            print("Save cancelled by user")
 
     def printMazeTerminalCoords(self):
         print("\nMaze Layout\n")
@@ -194,4 +211,31 @@ class mazeObj():
 
         #start the event loop
         editorWindow.mainloop()
+
+    def createPopUp(self):
+        userMazeFileName = None
+        popup = tk.Toplevel()
+        popup.title("Enter new maze file name")
+        popup.geometry("300x150")
+
+        popup.attributes("-topmost", True)  # Always on top
+        popup.grab_set()    # Makes popup modal (blocks interaction with other windows)
+        popup.focus_set()   # Gives the popup keyboard focus
+        popup.lift()        # Brings window to front
+
+        textEntry = tk.Entry(popup, width=30)
+        textEntry.pack(pady=20)
+
+        #call this when button
+        def getText():
+            nonlocal userMazeFileName 
+            userMazeFileName = textEntry.get()
+            print(f"User entered: {userMazeFileName}")
+            popup.destroy()
+
+        okButton = tk.Button(popup, text="OK",command=getText)
+        okButton.pack(pady=10)
+
+        popup.wait_window()
+        return userMazeFileName
 
