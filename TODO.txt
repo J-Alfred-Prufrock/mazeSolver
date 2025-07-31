@@ -1,7 +1,7 @@
 To do list
-1. install claude code
-1a . Make it an exe file so i can send to craig
+1 . Make it an exe file so i can send to craig - made github public
 2. make it so user can input name for file - done 29/07 @ 9:47
-3. make border around maze?
+3. make border around maze? - done 23/07
 4. make so that user can choose start finish
 5. multiple windows open at once?
+6. Make popup for unsolveable 

@@ -132,6 +132,18 @@ class mazeSolver:
         canvasWidth = self.maze.mazeSizeX * cellSize + (2 * borderThickness)
         canvasHeight = self.maze.mazeSizeY * cellSize + (2 * borderThickness)
         
+        # Get screen dimensions and determine if scrollbars are needed
+        root = tk.Tk()
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        root.destroy()
+        
+        max_window_width = screen_width - 100
+        max_window_height = screen_height - 200
+        needs_scrollbars = canvasWidth > max_window_width or canvasHeight > max_window_height
+        display_width = min(canvasWidth, max_window_width)
+        display_height = min(canvasHeight, max_window_height - 150)
+        
         # Color map for visualization
         colourMap = {
             0: "white",      # path
@@ -149,12 +161,29 @@ class mazeSolver:
         dfsWindow.title("DFS Algorithm Visualization")
         dfsWindow.attributes("-topmost", True)
         
-        # Create canvas
-        canvas = tk.Canvas(dfsWindow, width=canvasWidth, height=canvasHeight, background="lightgray")
-        canvas.pack(padx=10, pady=10)
+        # Create main frame
+        main_frame = tk.Frame(dfsWindow)
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # Create canvas with or without scrollbars
+        canvas_frame = tk.Frame(main_frame)
+        canvas_frame.pack(fill=tk.BOTH, expand=True)
+        
+        if needs_scrollbars:
+            canvas = tk.Canvas(canvas_frame, width=display_width, height=display_height, 
+                            background="lightgray", scrollregion=(0, 0, canvasWidth, canvasHeight))
+            v_scrollbar = tk.Scrollbar(canvas_frame, orient=tk.VERTICAL, command=canvas.yview)
+            h_scrollbar = tk.Scrollbar(canvas_frame, orient=tk.HORIZONTAL, command=canvas.xview)
+            canvas.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
+            v_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+            h_scrollbar.pack(side=tk.BOTTOM, fill=tk.X)
+            canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        else:
+            canvas = tk.Canvas(canvas_frame, width=canvasWidth, height=canvasHeight, background="lightgray")
+            canvas.pack()
         
         # Status label
-        statusLabel = tk.Label(dfsWindow, text="Ready to visualize DFS", font=("Arial", 12))
+        statusLabel = tk.Label(main_frame, text="Ready to visualize DFS", font=("Arial", 12))
         statusLabel.pack(pady=5)
         
         # Control variables
@@ -188,6 +217,18 @@ class mazeSolver:
                     
                     canvas.create_rectangle(x0, y0, x1, y1, fill=fillColour, outline="black")
         
+        def centerOnPosition(x, y):
+            """Center the view on a specific position"""
+            if needs_scrollbars:
+                center_x = x * cellSize + borderThickness + cellSize // 2
+                center_y = y * cellSize + borderThickness + cellSize // 2
+                scroll_x = (center_x - display_width // 2) / canvasWidth
+                scroll_y = (center_y - display_height // 2) / canvasHeight
+                scroll_x = max(0, min(1, scroll_x))
+                scroll_y = max(0, min(1, scroll_y))
+                canvas.xview_moveto(scroll_x)
+                canvas.yview_moveto(scroll_y)
+        
         def updateVisualization():
             """Update the visualization based on current step"""
             nonlocal currentStep
@@ -211,12 +252,15 @@ class mazeSolver:
                 visited.add(position)
                 specialNodes[position] = "current"
                 statusLabel.config(text=f"Exploring position ({x}, {y})")
+                centerOnPosition(x, y)
             elif action == "backtracking":
                 specialNodes[position] = "backtrack"
                 statusLabel.config(text=f"Backtracking from ({x}, {y})")
+                centerOnPosition(x, y)
             elif action == "goal_found":
                 specialNodes[position] = "final_path"
                 statusLabel.config(text=f"Goal found at ({x}, {y})!")
+                centerOnPosition(x, y)
             
             drawMaze(specialNodes)
             stepLabel.config(text=f"Step: {currentStep + 1} / {len(self.dfsSteps)}")
@@ -278,6 +322,9 @@ class mazeSolver:
             drawMaze()
             statusLabel.config(text="Ready to visualize DFS")
             stepLabel.config(text=f"Step: 0 / {len(self.dfsSteps)}")
+            if needs_scrollbars:
+                canvas.xview_moveto(0)
+                canvas.yview_moveto(0)
         
         def changeSpeed():
             """Change animation speed"""
@@ -293,7 +340,7 @@ class mazeSolver:
                 speedButton.config(text="Speed: Normal")
         
         # Control buttons
-        buttonFrame = tk.Frame(dfsWindow)
+        buttonFrame = tk.Frame(main_frame)
         buttonFrame.pack(pady=10)
         
         playButton = tk.Button(buttonFrame, text="Play", command=togglePlay, bg="lightgreen")
@@ -312,11 +359,11 @@ class mazeSolver:
         speedButton.pack(side=tk.LEFT, padx=5)
         
         # Step counter
-        stepLabel = tk.Label(dfsWindow, text=f"Step: 0 / {len(self.dfsSteps)}", font=("Arial", 10))
+        stepLabel = tk.Label(main_frame, text=f"Step: 0 / {len(self.dfsSteps)}", font=("Arial", 10))
         stepLabel.pack()
         
         # Legend
-        legendFrame = tk.Frame(dfsWindow)
+        legendFrame = tk.Frame(main_frame)
         legendFrame.pack(pady=5)
         
         tk.Label(legendFrame, text="Legend:", font=("Arial", 10, "bold")).pack()

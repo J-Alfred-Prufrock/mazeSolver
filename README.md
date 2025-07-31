@@ -5,12 +5,12 @@ Features
 - Save created maze from maze editor to file with specified name
 - Load maze from file as long as in proper layout
 - Has 2 premade mazes that you can edit or test
+- visual representation for solving maze
 
 Whats coming 
 - bfs search
 - stack implemtation for dfs
 - better gui
 - comparisions for solving time
-- visual representation for solving maze
 - maze run game perhaps idk
 - 
