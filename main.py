@@ -5,25 +5,11 @@ from fileReader import fileReader
 from mazeObj import mazeObj 
 from algorithms import mazeSolver
 
-
-outOfBounds = int(-1)
-path = int(0)
-wall = int(1)
-start = int(2)
-end = int(3)
-cursor = int(4)
-
-rows= []
-
+#intialise user maze
 userMaze = None
 
-symbolMap = {
-    path: ".",
-    wall: "#",
-    start: "S",
-    end: "E"
-}
-
+#Precondition none
+#Postcondition runs main logic
 def main():
     global userMaze
     print("Hello welcome to maze solver printer thing idk")
@@ -34,10 +20,9 @@ def main():
         userMaze = loadMadeFromFile()
     
     displayMaze(userMaze)
+    solveMaze(userMaze)
     
     
-
-
 #precondition user has premade maze files on their computer in same directory as the code
 #postcondition maze is loaded from file and inserted into the array and returned into main
 def loadMadeFromFile():
@@ -56,6 +41,8 @@ def loadMadeFromFile():
     #tempMaze.showMazePopupCoords()
     return tempMaze
 
+#precondition none
+#postcondition maze created to user specs for width and height, reutrns the mazeObj
 def createMaze():
     done = False
     tempMaze = None
@@ -81,8 +68,10 @@ def createMaze():
     tempMaze.createMaze()
     return tempMaze
 
+#precondition user has chosen or created a maze
+#postcondition the maze is displayed using the built in functions from mazeObj
 def displayMaze(userMaze):
-    choice = int(input("How would you like the maze to be displayed?\n1: Printed in commandline as coordiantes\n2: Printed in commandline as properties (walls/floors)\n3: Printed in a popup as coordiantes\n4: Displayed in a pop-up as properties (walls/floors)\n"))
+    choice = int(input("How would you like the maze to be displayed?\n1: Printed in commandline as coordiantes\n2: Printed in commandline as properties (walls/floors)\n3: Printed in a popup as coordiantes\n4: Displayed in a pop-up as properties (walls/floors)\n5: In the maze editor with the maze properties visualised as colours\n6: Do not display maze\n"))
     if choice == 1:
         userMaze.printMazeTerminalCoords()
     elif choice == 2:
@@ -96,13 +85,11 @@ def displayMaze(userMaze):
     elif choice == 6:
         pass
 
+#precondition user has chosen or created a maze
+#maze is solved
+def solveMaze(userMaze):
+    solver = mazeSolver(userMaze)
+    timeTakenToSolve = solver.dfsRecursive()
 
+#runs main logic   
 main()
-
-testMaze = loadMadeFromFile()
-solver = mazeSolver(testMaze)
-
-test = solver.dfs()
-
-
-

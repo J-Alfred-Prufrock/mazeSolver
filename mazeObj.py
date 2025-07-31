@@ -22,6 +22,8 @@ class mazeObj():
             self.end: "E"
         }
 
+    #precondition - user selects create maze
+    #postcondition - a blank maze is created to the users width and height specs
     def createMaze(self):
         for y in range(self.mazeSizeY):
             currentRowNodes = []
@@ -35,10 +37,14 @@ class mazeObj():
                 currentRowNodes.append(n)
             self.rows.append(currentRowNodes)
     
+    #precondition - a premade maze exists 
+    #postcondition - the premade maze is saved to the internal maze
     def addFromFile(self, mazeArray):
         self.rows = mazeArray
         pass
 
+    #precondition - a maze has been initalized
+    #postconidtion - maze is saved to file in the usual format
     def saveMazeToFile(self):
         fileName = self.createPopUp()
 
@@ -71,6 +77,8 @@ class mazeObj():
         else:
             print("Save cancelled by user")
 
+    #precondition - a maze has been initalized
+    #postcondition - maze coords are printed to terminal
     def printMazeTerminalCoords(self):
         print("\nMaze Layout\n")
         for y in range(self.mazeSizeY):
@@ -81,6 +89,8 @@ class mazeObj():
             print()
         print("Where S = start, . = path, # = wall, E = end")  
 
+    #precondition - a maze has been initalized
+    #postcondition - prints maze properties to terminal
     def printMazeLayout(self):
         print("\nMaze Layout")
         for y in range(self.mazeSizeY):
@@ -90,6 +100,8 @@ class mazeObj():
             print()  
         print("Where S = start, . = path, # = wall, E = end")  
 
+    #precondition - a maze has been initalized
+    #postcondition - a tkinter popup shows the maze as coords
     def showMazePopupCoords(self):
         mazePopup = tk.Tk()
         mazePopup.title("Maze Layout")
@@ -109,6 +121,8 @@ class mazeObj():
         text.insert(tk.END, "Where;\nS = start\n. = path\n# = wall\nE = end")
         mazePopup.mainloop()
 
+    #precondition - a maze has been initalized
+    #postcondition - a tkinter popup shows the maze as properties
     def showMazePopupProperties(self):
         mazePopup = tk.Tk()
         mazePopup.title("Maze Layout")
@@ -127,7 +141,10 @@ class mazeObj():
 
         text.insert(tk.END, "Where;\nS = start\n. = path\n# = wall\nE = end")
         mazePopup.mainloop()
-    
+
+    #precondition - a maze has been initalized
+    #postcondition - a tikinter popup shows the maze as coloured blocks that can be clicked to change
+    #              - as well as a save button
     def openMazeEditor(self): 
         """
         Opens a Tkinter window for editing the maze.
@@ -214,6 +231,8 @@ class mazeObj():
         #start the event loop
         editorWindow.mainloop()
 
+    #precondition - a maze has been initalized
+    #postcondition - a popup shows up to take the users name for the maze file to be saved to
     def createPopUp(self):
         userMazeFileName = None
         popup = tk.Toplevel()

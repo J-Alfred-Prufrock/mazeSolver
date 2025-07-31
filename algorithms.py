@@ -65,27 +65,28 @@ class mazeSolver:
 
         return neighbours
    
-
-    def dfs(self):
+    #the main recursive dfs algorithm
+    def dfsRecursive(self):
         startTime = time.time()
         self.visited = [[False for _ in range(self.maze.mazeSizeX)] for _ in range(self.maze.mazeSizeY)]
         self.path = []
         
 
-        result = self.dfsRecursive(self.startX,self.startY)   
+        result = self.dfsRecursiveCall(self.startX,self.startY)   
 
 
      
         endTime = time.time()
         totalTime = endTime - startTime
         elapsedTime = totalTime * 1000
-        print(f"dfs took {elapsedTime:.6f} miliseconds")
+        print(f"Recursive dfs took {elapsedTime:.6f} miliseconds")
         return totalTime
 
-    def dfsRecursive(self,currentLocationX,currentLocationY):
-        print(f"Exploring position ({currentLocationX}, {currentLocationY})")
+    #the recursive call to dfs
+    def dfsRecursiveCall(self,currentLocationX,currentLocationY):
+        #print(f"Exploring position ({currentLocationX}, {currentLocationY})")
         self.visited[currentLocationY][currentLocationX] = True
-        print(f"Marked ({currentLocationX}, {currentLocationY}) as visited")
+        #print(f"Marked ({currentLocationX}, {currentLocationY}) as visited")
 
 
         if self.goalCheck(currentLocationX,currentLocationY) == True:
@@ -93,15 +94,15 @@ class mazeSolver:
             return True
 
         neighbours = self.getValidNeighbours(currentLocationX,currentLocationY)
-        print(f"Found {len(neighbours)} neighbors: {neighbours}")
+        #print(f"Found {len(neighbours)} neighbors: {neighbours}")
         for neighbourX, neighbourY in neighbours:
             if self.visited[neighbourY][neighbourX] == False:
-                if self.dfsRecursive(neighbourX,neighbourY) == True:
+                if self.dfsRecursiveCall(neighbourX,neighbourY) == True:
                     return True
-        print(f"Backtracking from ({currentLocationX}, {currentLocationY})")
+        #print(f"Backtracking from ({currentLocationX}, {currentLocationY})")
         return False
 
-
+    #not implemneted yet
     def bfs(self):
         startTime = time.time()
         self.visited = [[False for _ in range(self.maze.mazeSizeX)] for _ in range(self.maze.mazeSizeY)]

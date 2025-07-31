@@ -36,7 +36,7 @@ class fileReader():
             xCounter = 0
             yCounter = 0
 
-            print(mazeWidth,mazeHeight)
+            #print(mazeWidth,mazeHeight)
             for rawLines in f:
                 lines = rawLines.strip()
                 for i in range(len(lines)):
@@ -49,7 +49,7 @@ class fileReader():
                 xCounter = 0
                 mazeArray.append(currentRow)
                 currentRow = []
-                print("\n")
+                #print("\n")
 
         currentMaze.addFromFile(mazeArray)
         return currentMaze
