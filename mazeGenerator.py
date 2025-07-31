@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import scrolledtext
 from fileReader import fileReader
 from mazeObj import mazeObj 
+from algorithms import mazeSolver
 
 
 outOfBounds = int(-1)
@@ -94,7 +95,12 @@ def displayMaze(userMaze):
         pass
 
 
-main()
+#main()
+
+testMaze = loadMadeFromFile()
+solver = mazeSolver(testMaze)
+
+test = solver.dfs()
 
 
 

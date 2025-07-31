@@ -2,7 +2,7 @@ class node:
     def __init__(self, xPosition, yPosition, property, mazeXSize, mazeYSize):
         self.xPosition = xPosition
         self.yPosition = yPosition
-        self.property = property #path = 0, wall = 1, start = 2, end = 3
+        self.property = property #out of bounds = -1, path = 0, wall = 1, start = 2, end = 3
         
         #initalise neighbours, -1 means none
         self.right = (-1)
