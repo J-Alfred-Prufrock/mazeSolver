@@ -21,5 +21,14 @@ class node:
         else:
             self.right = (-1)
 
+        if(mazeYSize > yPosition > 0):
+            self.up = yPosition - 1
+        else:
+            self.up = -1
+        if(0<=yPosition< (mazeYSize-1)):
+            self.down = yPosition + 1
+        else:
+            self.down = -1
+
 
 

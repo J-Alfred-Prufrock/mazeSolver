@@ -45,6 +45,8 @@ def loadMadeFromFile():
     mazeName = str(input("What is the name of the text file your maze is located in?\n"))
     if mazeName == "a":
         mazeName = "premadeMaze1"
+    elif mazeName == "b":
+        mazeName = "premadeMaze2"
 
     fileReaderClass = fileReader()
     tempMaze = fileReaderClass.loadMaze(mazeName)

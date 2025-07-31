@@ -40,6 +40,7 @@ class mazeSolver:
     #returns an array of tuples with valid neighbours of the given x and y coords
     def getValidNeighbours(self,x,y):
         checkingNode = self.maze.rows[y][x]
+        #print(f"node neighbours right-{checkingNode.right}, left - {checkingNode.left}, up- {checkingNode.up}, down - {checkingNode.down} and postion{x},{y}")
         neighbours = []
 
         if(checkingNode.right!=-1):
@@ -73,17 +74,19 @@ class mazeSolver:
 
         result = self.dfsRecursive(self.startX,self.startY)   
 
+
      
         endTime = time.time()
         totalTime = endTime - startTime
-        print(f"dfs took {totalTime:.4f} seconds")
+        elapsedTime = totalTime * 1000
+        print(f"dfs took {elapsedTime:.6f} miliseconds")
         return totalTime
 
     def dfsRecursive(self,currentLocationX,currentLocationY):
         print(f"Exploring position ({currentLocationX}, {currentLocationY})")
         self.visited[currentLocationY][currentLocationX] = True
         print(f"Marked ({currentLocationX}, {currentLocationY}) as visited")
-        
+
 
         if self.goalCheck(currentLocationX,currentLocationY) == True:
             print("Goal found!")
