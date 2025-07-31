@@ -97,7 +97,7 @@ def displayMaze(userMaze):
         pass
 
 
-#main()
+main()
 
 testMaze = loadMadeFromFile()
 solver = mazeSolver(testMaze)
