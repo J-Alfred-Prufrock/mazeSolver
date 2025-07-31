@@ -90,6 +90,7 @@ def displayMaze(userMaze):
 def solveMaze(userMaze):
     solver = mazeSolver(userMaze)
     timeTakenToSolve = solver.dfsRecursive()
+    solver.dfsRecursive(visualize=True)
 
 #runs main logic   
 main()

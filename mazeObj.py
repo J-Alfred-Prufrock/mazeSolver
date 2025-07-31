@@ -234,6 +234,7 @@ class mazeObj():
     #precondition - a maze has been initalized
     #postcondition - a popup shows up to take the users name for the maze file to be saved to
     def createPopUp(self):
+
         userMazeFileName = None
         popup = tk.Toplevel()
         popup.title("Enter new maze file name")
