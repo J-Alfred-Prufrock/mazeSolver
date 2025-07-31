@@ -135,10 +135,11 @@ class mazeObj():
     
         """
         cellSize = 30 #each cell is 30x30 pixels
+        borderThickness = 15
 
-        #calc canvas dimensions based upon maze size and cell size
-        canvasWidth = self.mazeSizeX * cellSize
-        canvasHeight = self.mazeSizeY *cellSize
+        #calc canvas dimensions based upon maze size and cell size, 2* to account for both sides
+        canvasWidth = self.mazeSizeX * cellSize + (2*borderThickness)
+        canvasHeight = self.mazeSizeY *cellSize + (2*borderThickness)
 
         #Defining colour for each of the properties
         colourMap = {
@@ -161,6 +162,7 @@ class mazeObj():
         #now we draw the maze
         def drawMaze():
             canvas.delete("all") # makes sure the canvas is empty
+            canvas.create_rectangle(0,0,canvasWidth,canvasHeight,fill="",outline="black",width=borderThickness)
 
             for y in range(self.mazeSizeY):
                 for x in range(self.mazeSizeX):
@@ -168,8 +170,8 @@ class mazeObj():
 
                     #calc pixel coords for current cell
                     #(x0,y0) is top left (x1,y1) is bottom right
-                    x0 = x * cellSize
-                    y0 = y * cellSize
+                    x0 = x * cellSize + borderThickness
+                    y0 = y * cellSize + borderThickness
                     x1 = x0 + cellSize
                     y1 = y0 + cellSize
 
@@ -185,8 +187,8 @@ class mazeObj():
             print(f"Canvas clicked at pixel coordinates: ({event.x}, {event.y})")
 
             #converts to pixel coords
-            clickedX = event.x // cellSize
-            clickedY = event.y // cellSize
+            clickedX = (event.x - borderThickness) // cellSize
+            clickedY = (event.y - borderThickness) // cellSize
 
             if 0<= clickedX < self.mazeSizeX and 0<= clickedY < self.mazeSizeY:
                 clickedNode = self.rows[clickedY][clickedX]
